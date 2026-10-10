@@ -1057,25 +1057,39 @@ function getCustomerLocation() {
    WHATSAPP
 ===================================================== */
 
-function checkoutWhatsApp() {
-    if (cart.length === 0) {
-        alert("Keranjang masih kosong.");
-        return;
-    }
 
-    // Hitung seluruh jumlah item
-    const totalQuantity = cart.reduce(
-        (total, item) => total + item.quantity,
-        0
-    );
-
-    // Minimal pembelian 2 item
-    if (totalQuantity < 2) {
+    // Lokasi wajib diisi sebelum checkout
+    if (customerDistance === null) {
         alert(
-            "Minimal pembelian adalah 2 item. Silakan tambahkan produk lagi."
+            "Silakan isi lokasi Anda terlebih dahulu dengan menekan tombol lokasi GPS."
         );
         return;
     }
+
+
+const totalQuantity = cart.reduce(
+    (total, item) => total + item.quantity,
+    0
+);
+
+// Cek apakah keranjang berisi LPG 12 kg
+const hasLPG12kg = cart.some(item => {
+    const productName =
+        `${item.name || ""} ${item.brand || ""}`.toLowerCase();
+
+    return (
+        productName.includes("12 kg") ||
+        productName.includes("12kg")
+    );
+});
+
+// Minimal 2 item, kecuali ada LPG 12 kg
+if (totalQuantity < 2 && !hasLPG12kg) {
+    alert(
+        "Minimal pembelian 2 item. LPG 12 kg boleh dibeli 1 tabung saja."
+    );
+    return;
+}
 
     const subtotal = cart.reduce(
         (total, item) =>
