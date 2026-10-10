@@ -1,1239 +1,1378 @@
-/* =====================================================
-   DATA PRODUK
-===================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-const products = [
+html {
+    scroll-behavior: smooth;
+}
 
-    {
-        id: 1,
-        brand: "Sindu Murni",
-        name: "Isi Ulang 19L / Galon",
-        price: 6000,
-        category: "galon",
-        image: "assets/galon aqua.png"
-    },
+body {
+    font-family: "Poppins", sans-serif;
+    background: #f5f9fa;
+    color: #263b44;
+}
 
-    {
-        id: 2,
-        brand: "AQUA",
-        name: "600 mL × 24 botol",
-        price: 49000,
-        category: "dus",
-        image: "assets/aqua600.jpg"
-    },
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
 
-    {
-        id: 3,
-        brand: "AQUA",
-        name: "19L Galon",
-        price: 22000,
-        category: "galon",
-        image: "assets/galon aqua.png"
-    },
-
-    {
-        id: 4,
-        brand: "Cleo",
-        name: "220 mL × 24 Botol",
-        price: 21000,
-        category: "dus",
-        image: "assets/cleo220b.jpeg"
-    },
-
-    {
-        id: 5,
-        brand: "Cleo",
-        name: "220 mL × 40 Gelas",
-        price: 27000,
-        category: "dus",
-        image: "assets/cleo220g.jpg"
-    },
-
-    {
-        id: 6,
-        brand: "Cleo",
-        name: "500 mL × 24 Botol",
-        price: 34000,
-        category: "dus",
-        image: "assets/cleo500.jpeg"
-    },
-
-    {
-        id: 7,
-        brand: "Cleo",
-        name: "1 L × 12 Botol",
-        price: 36000,
-        category: "dus",
-        image: "assets/cleo1l.png"
-    },
-
-    {
-        id: 8,
-        brand: "Cleo",
-        name: "15L Galon",
-        price: 20000,
-        category: "galon",
-        image: "assets/cleo15.png"
-    },
-
-    {
-        id: 9,
-        brand: "Cleo",
-        name: "19L Galon",
-        price: 21000,
-        category: "galon",
-        image: "assets/cleo galon.png"
-    },
-
-    {
-        id: 10,
-        brand: "Club",
-        name: "15L Galon",
-        price: 20000,
-        category: "galon",
-        image: "assets/club.png"
-    },
-
-    {
-        id: 11,
-        brand: "AQUVIVA",
-        name: "700 mL × 12 Botol",
-        price: 25000,
-        category: "dus",
-        image: "assets/aquaviva.webp"
-    },
-
-    {
-        id: 12,
-        brand: "LPG",
-        name: "LPG Melon 3 Kg",
-        price: 20000,
-        category: "lpg",
-        image: "assets/lpg-3kg.jpeg" 
-    },
-
-    {
-        id: 13,
-        brand: "LPG",
-        name: "LPG 12 Kg",
-        price: 240000,
-        category: "lpg",
-        image: "assets/lpg-12kg.jpg"
-    },
-
-    {
-        id: 14,
-        brand: "Es batu",
-        name: "Es batu 5kg",
-        price: 6000,
-        category: "es batu",
-        image: "assets/esbatu.jpg"
-    }
-
-];
-
-
-/* =====================================================
-   CART
-===================================================== */
-
-let cart = [];
-
-
-/* =====================================================
-   FORMAT RUPIAH
-===================================================== */
-
-function formatRupiah(number) {
-
-    return new Intl.NumberFormat(
-        "id-ID",
-        {
-            style: "currency",
-            currency: "IDR",
-            maximumFractionDigits: 0
-        }
-    ).format(number);
-
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 
-/* =====================================================
-   LOKASI TOKO
-===================================================== */
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    height: 80px;
+    padding: 0 5%;
+
+    display: flex;
+    align-items: center;
+
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(15px);
+
+    border-bottom: 1px solid #e3eaed;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    color: #245b72;
+    font-size: 23px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.nav-logo img {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 38px;
+
+    margin-left: auto;
+    margin-right: 25px;
+}
+
+.nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: #344b56;
+    transition: 0.2s;
+}
+
+.nav-links a:hover {
+    color: #168aad;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Jarak antara tombol keranjang dan hamburger */
+    margin-left: auto; /* Memastikan elemen ini terdorong ke paling kanan */
+}
+
+.nav-cart {
+    position: relative;
+
+    border: none;
+    background: transparent;
+
+    font-size: 23px;
+    padding: 8px;
+}
+
+#nav-cart-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 19px;
+    height: 19px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #168aad;
+    color: white;
+
+    border-radius: 50%;
+    font-size: 10px;
+}
+
+.hamburger {
+    display: none;
+
+    border: none;
+    background: transparent;
 
-const STORE_LOCATION = {
-
-    latitude: -7.439585614791877,
-
-    longitude: 112.72145628901556
-
-};
-
-
-let customerDistance = null;
-
-
-/* =====================================================
-   TAMPILKAN PRODUK
-===================================================== */
-
-function displayProducts(category = "semua") {
-
-    const container =
-        document.getElementById(
-            "product-container"
-        );
-
-
-    container.innerHTML = "";
-
-
-    const filteredProducts =
-        category === "semua"
-
-            ? products
-
-            : products.filter(
-                product =>
-                    product.category === category
-            );
-
-
-    filteredProducts.forEach(product => {
-
-
-        /* Cari jumlah produk di cart */
-
-        const cartItem =
-            cart.find(
-                item =>
-                    item.id === product.id
-            );
-
-
-        const quantity =
-            cartItem
-                ? cartItem.quantity
-                : 0;
-
-
-        const card =
-            document.createElement("div");
-
-
-        card.className =
-            "product-card";
-
-
-        /* =================================================
-           HTML CARD PRODUK
-        ================================================= */
-
-        card.innerHTML = `
-
-            <div class="product-image">
-
-                <img
-                    src="${product.image}"
-                    alt="${product.name}"
-                    onerror="this.src='images/no-image.png'"
-                >
-
-            </div>
-
-
-            <div class="product-info">
-
-                <span class="product-brand">
-
-                    ${product.brand}
-
-                </span>
-
-
-                <h3 class="product-name">
-
-                    ${product.name}
-
-                </h3>
-
-
-                <div class="product-bottom">
-
-
-                    <strong class="product-price">
-
-                        ${formatRupiah(product.price)}
-
-                    </strong>
-
-
-                    <div class="product-quantity-control">
-
-
-                        ${
-                            quantity > 0
-
-                            ? `
-
-                                <button
-                                    class="product-minus"
-                                >
-                                    −
-                                </button>
-
-
-                                <span
-                                    class="product-quantity"
-                                >
-                                    ${quantity}
-                                </span>
-
-                            `
-
-                            : ""
-
-                        }
-
-
-                        <button
-                            class="product-plus"
-                        >
-                            +
-                        </button>
-
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-        `;
-
-
-        /* =================================================
-           TOMBOL +
-        ================================================= */
-
-        const plusButton =
-            card.querySelector(
-                ".product-plus"
-            );
-
-
-        plusButton.addEventListener(
-            "click",
-            function() {
-
-                addToCart(product.id);
-
-                displayProducts(category);
-
-            }
-        );
-
-
-        /* =================================================
-           TOMBOL -
-        ================================================= */
-
-        const minusButton =
-            card.querySelector(
-                ".product-minus"
-            );
-
-
-        if (minusButton) {
-
-            minusButton.addEventListener(
-                "click",
-                function() {
-
-                    changeQuantity(
-                        product.id,
-                        -1
-                    );
-
-                    displayProducts(category);
-
-                }
-            );
-
-        }
-
-
-        container.appendChild(card);
-
-    });
-
+    font-size: 28px;
 }
 
 
-/* =====================================================
-   TAMBAH PRODUK
-===================================================== */
+/* =========================
+   HERO
+========================= */
 
-function addToCart(productId) {
+.hero {
+    position: relative;
 
-    const product =
-        products.find(
-            item =>
-                item.id === productId
-        );
+    height: 85vh;
+    min-height: 520px;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    if (!product) return;
+    text-align: center;
 
-
-    const existing =
-        cart.find(
-            item =>
-                item.id === productId
-        );
-
-
-    if (existing) {
-
-        existing.quantity++;
-
-    }
-
-    else {
-
-        cart.push({
-
-            ...product,
-
-            quantity: 1
-
-        });
-
-    }
-
-
-    updateCart();
-
+    overflow: hidden;
 }
 
+.hero-video {
+    position: absolute;
+    inset: 0;
 
-/* =====================================================
-   UBAH JUMLAH
-===================================================== */
+    width: 100%;
+    height: 100%;
 
-function changeQuantity(
-    id,
-    amount
-) {
-
-    const item =
-        cart.find(
-            item =>
-                item.id === id
-        );
-
-
-    if (!item) return;
-
-
-    item.quantity += amount;
-
-
-    if (item.quantity <= 0) {
-
-        cart =
-            cart.filter(
-                item =>
-                    item.id !== id
-            );
-
-    }
-
-
-    updateCart();
-
+    object-fit: cover;
 }
 
-
-/* =====================================================
-   HAPUS PRODUK
-===================================================== */
-
-function removeFromCart(id) {
-
-    cart =
-        cart.filter(
-            item =>
-                item.id !== id
-        );
-
-
-    updateCart();
-
-}
-
-
-/* =====================================================
-   UPDATE CART
-===================================================== */
-
-function updateCart() {
-
-
-    /* ============================
-       TOTAL JUMLAH ITEM
-    ============================ */
-
-    const totalQuantity =
-        cart.reduce(
-            (total, item) =>
-                total + item.quantity,
-            0
-        );
-
-
-    document.getElementById(
-        "nav-cart-count"
-    ).textContent =
-        totalQuantity;
-
-
-    document.getElementById(
-        "floating-cart-count"
-    ).textContent =
-        totalQuantity;
-
-
-    /* ============================
-       TAMPILAN CART
-    ============================ */
-
-    const cartItems =
-        document.getElementById(
-            "cart-items"
-        );
-
-
-    if (cart.length === 0) {
-
-        cartItems.innerHTML = `
-
-            <p class="empty-cart">
-
-                Keranjang masih kosong.
-
-            </p>
-
-        `;
-
-
-        updateSummary();
-
-        return;
-
-    }
-
-
-    cartItems.innerHTML = "";
-
-
-    cart.forEach(item => {
-
-
-        const div =
-            document.createElement("div");
-
-
-        div.className =
-            "cart-item";
-
-
-        div.innerHTML = `
-
-            <img
-                src="${item.image}"
-                alt="${item.name}"
-            >
-
-
-            <div>
-
-                <div class="cart-item-name">
-
-                    ${item.brand}
-                    - ${item.name}
-
-                </div>
-
-
-                <div class="cart-item-price">
-
-                    ${formatRupiah(item.price)}
-
-                </div>
-
-
-                <div class="quantity-control">
-
-
-                    <button class="minus">
-
-                        −
-
-                    </button>
-
-
-                    <span>
-
-                        ${item.quantity}
-
-                    </span>
-
-
-                    <button class="plus">
-
-                        +
-
-                    </button>
-
-
-                </div>
-
-            </div>
-
-
-            <button class="remove-item">
-
-                Hapus
-
-            </button>
-
-        `;
-
-
-        div.querySelector(
-            ".minus"
-        ).addEventListener(
-            "click",
-            function() {
-
-                changeQuantity(
-                    item.id,
-                    -1
-                );
-
-            }
-        );
-
-
-        div.querySelector(
-            ".plus"
-        ).addEventListener(
-            "click",
-            function() {
-
-                changeQuantity(
-                    item.id,
-                    1
-                );
-
-            }
-        );
-
-
-        div.querySelector(
-            ".remove-item"
-        ).addEventListener(
-            "click",
-            function() {
-
-                removeFromCart(
-                    item.id
-                );
-
-            }
-        );
-
-
-        cartItems.appendChild(div);
-
-    });
-
-
-    updateSummary();
-
-}
-
-
-/* =====================================================
-   BIAYA
-===================================================== */
-
-function calculateFees() {
-    let distanceFee = 0;
-
-    // Biaya jarak Rp2.000 jika jarak lebih dari 2 km
-    if (
-        customerDistance !== null &&
-        customerDistance > 2
-    ) {
-        distanceFee = 2000;
-    }
-
-    return {
-        serviceFee: 0,
-        distanceFee: distanceFee
-    };
-}
-
-
-/* =====================================================
-   UPDATE TOTAL
-===================================================== */
-
-function updateSummary() {
-    const subtotal = cart.reduce(
-        (total, item) =>
-            total + item.price * item.quantity,
-        0
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        rgba(0,0,0,0.2),
+        rgba(0,0,0,0.65)
     );
+}
 
-    const fees = calculateFees();
+.hero-content {
+    position: relative;
+    z-index: 2;
 
-    const total = subtotal + fees.distanceFee;
+    max-width: 700px;
+    padding: 20px;
 
-    document.getElementById("cart-subtotal").textContent =
-        formatRupiah(subtotal);
+    color: white;
+}
 
-    document.getElementById("distance-fee").textContent =
-        formatRupiah(fees.distanceFee);
+.hero-small {
+    font-size: 13px;
+    letter-spacing: 4px;
+    margin-bottom: 15px;
+}
 
-    document.getElementById("cart-total").textContent =
-        formatRupiah(total);
+.hero h1 {
+    font-size: clamp(55px, 8vw, 90px);
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.hero-content > p:not(.hero-small) {
+    margin-bottom: 30px;
+    font-size: 16px;
+}
+
+.hero-button {
+    display: inline-block;
+
+    padding: 13px 30px;
+
+    background: white;
+    color: #245b72;
+
+    border-radius: 30px;
+
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.hero-button:hover {
+    transform: translateY(-3px);
 }
 
 
-/* =====================================================
+/* =========================
+   SECTION
+========================= */
+
+.section-container {
+    width: min(1150px, 90%);
+    margin: auto;
+}
+
+.section-label {
+    margin-bottom: 8px;
+
+    color: #168aad;
+
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.section-heading {
+    margin-bottom: 35px;
+    text-align: center;
+}
+
+.section-heading h2 {
+    font-size: 36px;
+    margin-bottom: 8px;
+}
+
+.section-heading > p:last-child {
+    color: #71838c;
+    font-size: 14px;
+}
+
+
+/* =========================
+   ABOUT
+========================= */
+
+.about-section {
+    padding: 100px 0;
+    background: white;
+}
+
+.about-content {
+    text-align: center;
+}
+
+.about-content h2 {
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.about-content > div:first-child > p:not(.section-label) {
+    max-width: 750px;
+
+    margin: 10px auto;
+
+    color: #667a83;
+
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+.about-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+
+    margin-top: 40px;
+}
+
+.feature {
+    padding: 25px;
+
+    background: #f3f8fa;
+
+    border-radius: 18px;
+}
+
+.feature span {
+    display: block;
+
+    font-size: 30px;
+
+    margin-bottom: 10px;
+}
+
+.feature strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.feature p {
+    color: #71838c;
+    font-size: 12px;
+}
+
+
+/* =========================
+   PRODUK
+========================= */
+
+.products-section {
+    padding: 100px 0;
+    background: #f5f9fa;
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 40px;
+}
+
+.filter-btn {
+    padding: 10px 22px;
+
+    border: 1px solid #d6e1e5;
+    border-radius: 25px;
+
+    background: white;
+    color: #526a75;
+
+    transition: 0.2s;
+}
+
+.filter-btn:hover {
+    border-color: #168aad;
+    color: #168aad;
+}
+
+.filter-btn.active {
+    background: #168aad;
+    border-color: #168aad;
+    color: white;
+}
+
+
+/* PRODUCT GRID */
+
+.product-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+}
+
+
+/* PRODUCT CARD */
+
+.product-card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    transition: 0.25s;
+    box-sizing: border-box; /* Tambahkan ini agar padding aman */
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+
+/* FOTO */
+
+.product-image {
+    height: 190px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: #fafcfc;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+
+/* INFO */
+
+.product-info {
+    padding: 14px; /* Sedikit dikurangi agar lebih lega di HP */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    box-sizing: border-box; /* Tambahkan ini */
+}
+
+.product-brand {
+    color: #168aad;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+.product-name {
+    min-height: 42px;
+
+    margin-top: 5px;
+
+    font-size: 14px;
+}
+
+
+/* BAGIAN HARGA + JUMLAH */
+
+.product-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px; /* Dikurangi sedikit dari 10px supaya tombol tidak terdorong keluar */
+    margin-top: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.product-price {
+    color: #245b72;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   TOMBOL JUMLAH PRODUK
+========================= */
+
+.product-quantity-control {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+
+/* TOMBOL + DAN - */
+
+.product-quantity-control button {
+    width: 31px;
+    height: 31px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #168aad;
+    color: white;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.product-quantity-control button:hover {
+    background: #126d88;
+
+    transform: scale(1.08);
+}
+
+
+/* ANGKA */
+
+.product-quantity {
+    min-width: 22px;
+
+    text-align: center;
+
+    color: #245b72;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    animation: quantityPop 0.2s ease;
+}
+
+
+/* EFEK ANGKA */
+
+@keyframes quantityPop {
+
+    0% {
+        transform: scale(0.7);
+    }
+
+    60% {
+        transform: scale(1.25);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+
+/* =========================
+   UNTUK USAHA
+========================= */
+
+.business-section {
+    background: #263735;
+
+    color: white;
+
+    padding: 110px 10%;
+}
+
+.business-content {
+    max-width: 900px;
+
+    margin: auto;
+}
+
+.business-content h2 {
+    font-size: 55px;
+
+    line-height: 1.1;
+
+    margin-bottom: 25px;
+}
+
+.business-content > p:not(.section-label) {
+    max-width: 650px;
+
+    line-height: 1.8;
+
+    opacity: 0.8;
+}
+
+.business-features {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 20px;
+
+    margin: 50px 0;
+}
+
+.business-features div {
+    background: rgba(255,255,255,0.08);
+
+    padding: 25px;
+
+    border-radius: 15px;
+}
+
+.business-features span {
+    font-size: 25px;
+}
+
+.business-features p {
+    margin-top: 15px;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+.business-button {
+    border: none;
+
+    background: white;
+
+    color: #263735;
+
+    padding: 14px 25px;
+
+    border-radius: 25px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   LOKASI
+========================= */
+
+.location-section {
+    padding: 100px 0;
+    background: white;
+}
+
+.location-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+}
+
+.location-card {
+    padding: 35px;
+
+    background: #f5f9fa;
+
+    border-radius: 20px;
+
+    text-align: center;
+}
+
+.location-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.location-card h3 {
+    margin-bottom: 10px;
+}
+
+.location-card p {
+    margin-bottom: 8px;
+
+    color: #71838c;
+    font-size: 14px;
+}
+
+.location-card strong {
+    display: block;
+
+    margin-bottom: 15px;
+
+    color: #245b72;
+}
+
+.maps-button {
+    display: inline-block;
+
+    margin-top: 12px;
+
+    padding: 10px 18px;
+
+    border-radius: 25px;
+
+    background: #168aad;
+    color: white;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 45px 20px;
+
+    background: #203740;
+
+    color: white;
+
+    text-align: center;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+
+    font-weight: 700;
+}
+
+.footer-logo img {
+    width: 42px;
+    height: 42px;
+
+    object-fit: contain;
+}
+
+footer p {
+    color: #b9c9ce;
+    font-size: 13px;
+}
+
+.copyright {
+    margin-top: 20px;
+}
+
+
+/* =========================
+   FLOATING CART
+========================= */
+
+.floating-cart {
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    z-index: 999;
+
+    width: 64px;
+    height: 64px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: white;
+
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+
+    font-size: 25px;
+
+    transition: 0.2s;
+}
+
+.floating-cart:hover {
+    transform: scale(1.08);
+}
+
+#floating-cart-count {
+    position: absolute;
+
+    top: -3px;
+    right: -3px;
+
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #168aad;
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 11px;
+}
+
+
+/* =========================
    CART MODAL
-===================================================== */
+========================= */
 
-function openCart() {
+.cart-modal {
+    position: fixed;
+    inset: 0;
 
-    document
-        .getElementById("cart-modal")
-        .classList.add("show");
+    z-index: 2000;
 
+    display: none;
+    justify-content: flex-end;
 
-    document.body.style.overflow =
-        "hidden";
+    background: rgba(0,0,0,0.45);
+}
 
+.cart-modal.show {
+    display: flex;
+}
+
+.cart-box {
+    width: min(430px, 100%);
+    height: 100%;
+
+    padding: 25px;
+
+    overflow-y: auto;
+
+    background: white;
+}
+
+.cart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #e5eaec;
+}
+
+.close-cart {
+    width: 35px;
+    height: 35px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #f0f3f4;
+
+    font-size: 20px;
+}
+
+.cart-items {
+    padding: 20px 0;
+}
+
+.empty-cart {
+    padding: 40px 0;
+
+    color: #8a9aa1;
+
+    text-align: center;
+}
+
+.cart-item {
+    display: grid;
+
+    grid-template-columns: 55px 1fr auto;
+
+    gap: 12px;
+
+    align-items: center;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid #edf0f1;
+}
+
+.cart-item img {
+    width: 55px;
+    height: 55px;
+
+    object-fit: contain;
+
+    background: #f7f9f9;
+
+    border-radius: 10px;
+}
+
+.cart-item-name {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.cart-item-price {
+    color: #819198;
+    font-size: 11px;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-top: 8px;
+}
+
+.quantity-control button {
+    width: 24px;
+    height: 24px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #e9f2f4;
+}
+
+.remove-item {
+    border: none;
+    background: transparent;
+
+    color: #c55;
+
+    font-size: 11px;
+}
+
+.cart-summary {
+    padding-top: 15px;
+
+    border-top: 1px solid #e5eaec;
+}
+
+.cart-summary > div {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+
+    color: #71838c;
+
+    font-size: 13px;
+}
+
+.total-row {
+    margin-top: 15px;
+    padding-top: 15px;
+
+    border-top: 1px solid #e5eaec;
+
+    font-size: 17px !important;
+}
+
+.total-row strong {
+    color: #168aad;
 }
 
 
-function closeCart() {
-
-    document
-        .getElementById("cart-modal")
-        .classList.remove("show");
-
-
-    document.body.style.overflow =
-        "";
-
-}
-
-
-/* =====================================================
-   DAFTAR PELANGGAN BISNIS
-===================================================== */
-
-function openBusinessForm() {
-
-    /*
-       GANTI NOMOR INI
-       dengan nomor WhatsApp Sindu Murni
-       (samakan dengan nomor di checkoutWhatsApp)
-    */
-
-    const phone =
-        "6281234488245";
-
-
-    let message =
-        "Halo Sindu Murni!%0A%0A";
-
-
-    message +=
-        "Saya tertarik daftar sebagai " +
-        "pelanggan bisnis untuk kebutuhan " +
-        "air dan LPG usaha saya.%0A%0A";
-
-
-    message +=
-        "Mohon info lebih lanjut mengenai " +
-        "harga khusus bisnis dan jadwal " +
-        "pengiriman. Terima kasih!";
-
-
-    window.open(
-
-        `https://wa.me/${phone}?text=${message}`,
-
-        "_blank"
-
-    );
-
-}
-
-
-/* =====================================================
-   FILTER
-===================================================== */
-
-function setupFilters() {
-
-    const buttons =
-        document.querySelectorAll(
-            ".filter-btn"
-        );
-
-
-    buttons.forEach(button => {
-
-        button.addEventListener(
-            "click",
-            function() {
-
-
-                buttons.forEach(btn => {
-
-                    btn.classList.remove(
-                        "active"
-                    );
-
-                });
-
-
-                this.classList.add(
-                    "active"
-                );
-
-
-                displayProducts(
-                    this.dataset.filter
-                );
-
-            }
-        );
-
-    });
-
-}
-
-
-/* =====================================================
-   HAMBURGER
-===================================================== */
-
-function setupHamburger() {
-
-    const hamburger =
-        document.getElementById(
-            "hamburger"
-        );
-
-
-    const navLinks =
-        document.getElementById(
-            "navLinks"
-        );
-
-
-    hamburger.addEventListener(
-        "click",
-        function() {
-
-            navLinks.classList.toggle(
-                "active"
-            );
-
-        }
-    );
-
-
-    navLinks
-        .querySelectorAll("a")
-        .forEach(link => {
-
-            link.addEventListener(
-                "click",
-                function() {
-
-                    navLinks.classList.remove(
-                        "active"
-                    );
-
-                }
-            );
-
-        });
-
-}
-
-
-/* =====================================================
-   HITUNG JARAK
-===================================================== */
-
-function calculateDistance(
-    lat1,
-    lon1,
-    lat2,
-    lon2
-) {
-
-    const R = 6371;
-
-
-    const dLat =
-        (lat2 - lat1)
-        * Math.PI / 180;
-
-
-    const dLon =
-        (lon2 - lon1)
-        * Math.PI / 180;
-
-
-    const a =
-        Math.sin(dLat / 2) *
-        Math.sin(dLat / 2)
-
-        +
-
-        Math.cos(
-            lat1 * Math.PI / 180
-        )
-
-        *
-
-        Math.cos(
-            lat2 * Math.PI / 180
-        )
-
-        *
-
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-
-
-    const c =
-        2 *
-        Math.atan2(
-            Math.sqrt(a),
-            Math.sqrt(1 - a)
-        );
-
-
-    return R * c;
-
-}
-
-
-/* =====================================================
+/* =========================
    GPS
-===================================================== */
+========================= */
 
-function getCustomerLocation() {
+.distance-input {
+    margin-top: 25px;
+    padding: 18px;
 
-    const button =
-        document.getElementById(
-            "locationButton"
-        );
+    background: #f5f9fa;
+
+    border-radius: 14px;
+}
+
+.distance-input label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.distance-result {
+    padding: 12px;
+
+    margin-bottom: 10px;
+
+    background: white;
+
+    border-radius: 9px;
+
+    text-align: center;
+}
+
+.distance-result strong {
+    color: #168aad;
+}
+
+.location-button {
+    width: 100%;
+
+    padding: 11px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #e1f0f4;
+    color: #168aad;
+
+    font-weight: 600;
+}
+
+.location-button:disabled {
+    opacity: 0.6;
+}
+
+.distance-input small {
+    display: block;
+
+    margin-top: 8px;
+
+    color: #83939a;
+
+    font-size: 10px;
+}
 
 
-    const distanceText =
-        document.getElementById(
-            "distance-text"
-        );
+/* =========================
+   CHECKOUT
+========================= */
+
+.checkout-button {
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 14px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #168a59;
+    color: white;
+
+    font-weight: 700;
+}
 
 
-    if (!navigator.geolocation) {
+/* =========================
+   TABLET
+========================= */
 
-        alert(
-            "Browser tidak mendukung GPS."
-        );
+@media (max-width: 900px) {
 
-        return;
-
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 
-
-    button.textContent =
-        "📍 Mencari lokasi...";
-
-
-    button.disabled = true;
-
-
-    navigator.geolocation.getCurrentPosition(
-
-        function(position) {
-
-
-            const latitude =
-                position.coords.latitude;
-
-
-            const longitude =
-                position.coords.longitude;
-
-
-            customerDistance =
-                calculateDistance(
-
-                    STORE_LOCATION.latitude,
-
-                    STORE_LOCATION.longitude,
-
-                    latitude,
-
-                    longitude
-
-                );
-
-
-            distanceText.textContent =
-                customerDistance.toFixed(1)
-                + " km";
-
-
-            button.textContent =
-                "✓ Lokasi berhasil didapat";
-
-
-            button.disabled = false;
-
-
-            updateSummary();
-
-        },
-
-
-        function() {
-
-
-            button.textContent =
-                "📍 Gunakan Lokasi Saya";
-
-
-            button.disabled = false;
-
-
-            alert(
-                "Lokasi tidak dapat diakses. Izinkan akses lokasi pada browser."
-            );
-
-        },
-
-        {
-
-            enableHighAccuracy: true,
-
-            timeout: 10000,
-
-            maximumAge: 0
-
-        }
-
-    );
+    .business-features {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
 }
 
 
-/* =====================================================
-   WHATSAPP
-===================================================== */
+/* =========================
+   HP
+========================= */
 
-function checkoutWhatsApp() {
+@media (max-width: 700px) {
 
-    // Lokasi wajib diisi sebelum checkout
-    if (customerDistance === null) {
-        alert("Silakan isi lokasi Anda terlebih dahulu dengan menekan tombol lokasi GPS.");
-        return;
+    .navbar {
+        height: 70px;
+        padding: 0 18px;
     }
 
-    // Cek apakah keranjang kosong
-    if (cart.length === 0) {
-        alert("Keranjang masih kosong.");
-        return;
+    .nav-logo {
+        font-size: 17px;
+        gap: 9px;
     }
 
-    // Lanjutkan kode checkout WhatsApp kamu yang sebelumnya di sini...
+    .nav-logo img {
+        width: 43px;
+        height: 43px;
+    }
 
-    // Hitung seluruh jumlah item
+    .nav-links {
+        position: absolute;
+
+        top: 70px;
+        left: 0;
+
+        width: 100%;
+
+        display: none;
+        flex-direction: column;
+
+        gap: 0;
+        margin: 0;
+
+        background: rgba(255,255,255,0.98);
+
+        box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        width: 100%;
+
+        padding: 16px 25px;
+
+        border-bottom: 1px solid #edf0f1;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .hero {
+        height: 75vh;
+    }
+
+    .hero h1 {
+        font-size: 55px;
+    }
+
+    .about-features {
+        grid-template-columns: 1fr;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 12px;
+    }
+
+    .product-image {
+        height: 145px;
+    }
+
+    .product-info {
+        padding: 13px;
+    }
+
+    .product-name {
+        font-size: 12px;
+    }
+
+    .product-price {
+        font-size: 13px;
+    }
+
+    .product-quantity-control button {
+        width: 28px;
+        height: 28px;
+    }
+
+    .location-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .floating-cart {
+        right: 18px;
+        bottom: 18px;
+    }
+
+    .business-section {
+        padding: 70px 6%;
+    }
+
+    .business-content h2 {
+        font-size: 36px;
+    }
+
+    .business-features {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* =========================
+   WHATSAPP KAMI
+========================= */
+
+.whatsapp-section {
+    padding: 0 5% 90px;
+    background: white;
+}
+
+.whatsapp-card {
+    width: min(1150px, 100%);
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    padding: 35px 40px;
+
+    background: #f1f8f6;
+    border: 1px solid #dcefe7;
+    border-radius: 25px;
+}
+
+.whatsapp-content {
+    flex: 1;
+}
+
+.whatsapp-content h2 {
+    margin-bottom: 8px;
+    color: #203740;
+    font-size: 26px;
+}
+
+.whatsapp-content > p:not(.section-label) {
+    margin-bottom: 10px;
+    color: #71838c;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.whatsapp-content strong {
+    color: #16834b;
+    font-size: 17px;
+}
+
+.whatsapp-button {
+    flex-shrink: 0;
+
+    display: inline-block;
+    padding: 14px 25px;
+
+    background: #25d366;
+    color: white;
+
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 700;
+
+    transition: 0.2s;
+}
+
+.whatsapp-button:hover {
+    background: #1eae54;
+    transform: translateY(-3px);
+}
+
+/* Tampilan HP */
+
+@media (max-width: 700px) {
+    .whatsapp-section {
+        padding: 0 5% 60px;
+    }
+
+    .whatsapp-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+        padding: 28px 23px;
+    }
+
+    .whatsapp-content h2 {
+        font-size: 22px;
+    }
+
+    .whatsapp-button {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+
+/* =========================
+   HASIL UJI LABORATORIUM
+========================= */
+
+.lab-section {
+    margin-top: 65px;
+}
+
+.lab-heading {
+    max-width: 700px;
+    margin: 0 auto 30px;
+    text-align: center;
+}
+
+.lab-heading h2 {
+    color: #263b44;
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.lab-heading > p:last-child {
+    color: #71838c;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.lab-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.lab-card {
+    margin: 0;
+    padding: 15px;
+    background: #f3f8fa;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.lab-card img {
+    display: block;
+    width: 100%;
+    height: 420px;
+    object-fit: contain;
+    background: white;
+    border-radius: 12px;
+}
+
+.lab-card figcaption {
+    padding: 15px 5px 5px;
+    color: #263b44;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+@media (max-width: 700px) {
+    .lab-section {
+        margin-top: 45px;
+    }
+
+    .lab-heading h2 {
+        font-size: 26px;
+    }
+
+    .lab-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .lab-card img {
+        height: 350px;
+    }
+}
+
+
+
+@media screen and (max-width: 768px) {
+    header,
+    .navbar,
+    nav {
+        box-sizing: border-box;
+    }
+
+    header .container,
+    .navbar .container,
+    .nav-container {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .hamburger,
+    .menu-toggle,
+    .hamburger-menu,
+    .menu-btn {
+        margin-left: auto !important;
+        flex-shrink: 0;
+    }
+}
+
+/* Tambahkan ini di bagian bawah file CSS Anda */
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr); /* Ubah jadi 2 kolom di HP */
+        gap: 12px;
+    }
     
-const totalQuantity = cart.reduce(
-    (total, item) => total + item.quantity,
-    0
-);
-
-// Cek apakah keranjang berisi LPG 12 kg
-const hasLPG12kg = cart.some(item => {
-    const productName =
-        `${item.name || ""} ${item.brand || ""}`.toLowerCase();
-
-    return (
-        productName.includes("12 kg") ||
-        productName.includes("12kg")
-    );
-});
-
-// Minimal 2 item, kecuali ada LPG 12 kg
-if (totalQuantity < 2 && !hasLPG12kg) {
-    alert(
-        "Minimal pembelian 2 item kecuali item LPG 12 kg boleh jika hanya pesan 1."
-    );
-    return;
-}
-
-
-    const subtotal = cart.reduce(
-        (total, item) =>
-            total + item.price * item.quantity,
-        0
-    );
-
-    const fees = calculateFees();
-    const total = subtotal + fees.distanceFee;
-
-    let message = "Halo Sindu Murni!\n\n";
-    message += "Saya ingin memesan:\n";
-
-    cart.forEach(item => {
-        message += `• ${item.brand} - ${item.name}\n`;
-        message += `  Jumlah: ${item.quantity}\n`;
-        message += `  Harga: ${formatRupiah(item.price * item.quantity)}\n`;
-    });
-
-    message += `\nTotal jumlah item: ${totalQuantity}\n`;
-    message += `Subtotal: ${formatRupiah(subtotal)}\n`;
-    message += `Biaya jarak: ${formatRupiah(fees.distanceFee)}\n`;
-
-    if (customerDistance !== null) {
-        message += `Jarak: ${customerDistance.toFixed(1)} km\n`;
+    .product-quantity-control button {
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
     }
-
-    message += `Total pembayaran: ${formatRupiah(total)}\n\n`;
-    message += "Terima kasih!";
-
-    const phone = "6281234488245";
-
-    window.open(
-        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
-        "_blank"
-    );
-}
-
-
-/* =====================================================
-   JALANKAN WEBSITE
-===================================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-
-        /* Tampilkan produk */
-
-        displayProducts();
-
-
-        /* Filter */
-
-        setupFilters();
-
-
-        /* Hamburger */
-
-        setupHamburger();
-
-
-        /* Cart navbar */
-
-        document
-            .getElementById("navCart")
-            .addEventListener(
-                "click",
-                openCart
-            );
-
-
-        /* Floating cart */
-
-        document
-            .getElementById("floatingCart")
-            .addEventListener(
-                "click",
-                openCart
-            );
-
-
-        /* Tutup cart */
-
-        document
-            .getElementById("closeCart")
-            .addEventListener(
-                "click",
-                closeCart
-            );
-
-
-        /* Klik luar cart */
-
-        document
-            .getElementById("cart-modal")
-            .addEventListener(
-                "click",
-                function(event) {
-
-                    if (
-                        event.target === this
-                    ) {
-
-                        closeCart();
-
-                    }
-
-                }
-            );
-
-
-        /* GPS */
-
-        document
-            .getElementById(
-                "locationButton"
-            )
-            .addEventListener(
-                "click",
-                getCustomerLocation
-            );
-
-
-        /* WhatsApp */
-
-        document
-            .getElementById(
-                "checkoutButton"
-            )
-            .addEventListener(
-                "click",
-                checkoutWhatsApp
-            );
-
+    
+    .product-price {
+        font-size: 13px; /* Ukuran harga disesuaikan sedikit agar muat */
     }
-);
+}
