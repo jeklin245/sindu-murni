@@ -10,7 +10,7 @@ const products = [
         name: "Isi Ulang 19L / Galon",
         price: 6000,
         category: "galon",
-        image: "assets/galon aqua.png"
+        image: "assets/isiulang.png"
     },
 
     {
