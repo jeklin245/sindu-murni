@@ -1126,7 +1126,7 @@ if (totalQuantity < 2 && !hasLPG12kg) {
         `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
         "_blank"
     );
-}
+
 
 
 /* =====================================================
