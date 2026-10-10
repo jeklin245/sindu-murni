@@ -1057,16 +1057,24 @@ function getCustomerLocation() {
    WHATSAPP
 ===================================================== */
 
+function checkoutWhatsApp() {
 
     // Lokasi wajib diisi sebelum checkout
     if (customerDistance === null) {
-        alert(
-            "Silakan isi lokasi Anda terlebih dahulu dengan menekan tombol lokasi GPS."
-        );
+        alert("Silakan isi lokasi Anda terlebih dahulu dengan menekan tombol lokasi GPS.");
         return;
     }
 
+    // Cek apakah keranjang kosong
+    if (cart.length === 0) {
+        alert("Keranjang masih kosong.");
+        return;
+    }
 
+    // Lanjutkan kode checkout WhatsApp kamu yang sebelumnya di sini...
+
+    // Hitung seluruh jumlah item
+    
 const totalQuantity = cart.reduce(
     (total, item) => total + item.quantity,
     0
@@ -1086,10 +1094,11 @@ const hasLPG12kg = cart.some(item => {
 // Minimal 2 item, kecuali ada LPG 12 kg
 if (totalQuantity < 2 && !hasLPG12kg) {
     alert(
-        "Minimal pembelian 2 item. LPG 12 kg boleh dibeli 1 tabung saja."
+        "Minimal pembelian 2 item kecuali item LPG 12 kg boleh jika hanya pesan 1."
     );
     return;
 }
+
 
     const subtotal = cart.reduce(
         (total, item) =>
@@ -1126,7 +1135,7 @@ if (totalQuantity < 2 && !hasLPG12kg) {
         `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
         "_blank"
     );
-
+}
 
 
 /* =====================================================
