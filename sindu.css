@@ -1283,7 +1283,8 @@ footer p {
 
 .lab-gallery {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 650px);
+    justify-content: center;
     gap: 25px;
     max-width: 900px;
     margin: 0 auto;
