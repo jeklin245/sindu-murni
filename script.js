@@ -11,7 +11,6 @@ const products = [
         price: 6000,
         category: "galon",
         image: "assets/isiulang.png"
-        
     },
 
     {
@@ -124,6 +123,15 @@ const products = [
 
     {
         id: 14,
+        brand: "LPG",
+        name: "LPG 50 Kg",
+        price: 240000,
+        category: "lpg",
+        image: "assets/lpg-50kg.jpeg"
+    },
+
+    {
+        id: 15,
         brand: "Es batu",
         name: "Es batu 5kg",
         price: 6000,
